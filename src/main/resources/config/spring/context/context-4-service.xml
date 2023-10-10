@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="adminLoginService"
+		class="service.admin.login.AdminLoginService">
+		<constructor-arg ref="adminDao" />
+	</bean>
+	
+	<bean id="adminMemberService"
+		class="service.admin.member.AdminMemberService">
+		<constructor-arg ref="adminDao" />
+	</bean>
+	
+	<bean id="usersService" class="service.users.UsersService">
+		<constructor-arg ref="usersDao"/>
+	</bean>
+	
+	<bean id="loginService" class="service.login.LoginService">
+		<property name="userDao" ref="usersDao"/>
+	</bean>
+</beans>

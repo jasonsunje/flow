@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+  <meta charset="utf-8">
+  <style>
+    .btn-style{
+      background: #393939;
+      border-radius: 5px;
+      width: 80px;
+      height: 30px;
+      color: #FFFFFF;
+      font-size: 14px;
+      vertical-align: top;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<button type="button" class="btn-style" name="file-check">작성</button>
+<h1>fileUpload</h1>
+<form name="fileForm" th:action="@{/fileUpload}" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" value="첨부파일"/>
+  <br>
+</form>
+<input type="button" value="업로드" onclick="document.fileForm.submit()"/>
+
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  $('button[name="file-check"]').on("click", function() {
+    location.href="/fileCheck";
+  });
+
+  $("input[name=file]").change(function () {
+    var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+    if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) === -1) {
+      alert("이미지 파일만 업로드 가능합니다. (" + fileExtension.join(", ") + ")");
+      $("input[name=file]").val("");
+    }
+  });
+</script>
+</body>
+</html>

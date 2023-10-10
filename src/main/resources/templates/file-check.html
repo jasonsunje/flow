@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+
+    .custom-tag {
+         position: relative;
+         height: 30px;
+         display: inline-block;
+         border: solid 1px black;
+         border-radius: 10%;
+         margin: 5px;
+       }
+
+    .custom-tag span {
+      padding-left: 10px;
+      padding-right: 30px;
+      height: inherit;
+    }
+
+    .custom-tag .btn-clear {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 30px;
+      height: inherit;
+      background: url(https://img.icons8.com/pastel-glyph/2x/cancel.png) center center no-repeat;
+      background-size: 50%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<form name="file-check" th:action="@{/fileCheck}" method="post">
+
+  <table>
+    <tr>
+      <th style="text-align: left">고정 확장자 </th>
+      <td>
+        <label><input type="checkbox" name="bat" checked> bat</label>
+        <label><input type="checkbox" name="cmd" > cmd</label>
+        <label><input type="checkbox" name="com" > com</label>
+        <label><input type="checkbox" name="cpl" > cpl</label>
+        <label><input type="checkbox" name="exe" > exe</label>
+        <label><input type="checkbox" name="scr" > scr</label>
+        <label><input type="checkbox" name="js" > js</label>
+      </td>
+    </tr>
+    <tr>
+      <th style="padding-right: 30px">커스텀 확장자 </th>
+      <td>
+        <label>
+          <input id="custom" type="text" placeholder="확장자 입력">
+        </label>
+        <input type="button" value="+추가" style="background-color:gray ; color: white">
+      </td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>
+        <div id="addExt" style="border: 1px solid black; width: 380px">
+          <div id="cnt" style="display: block; font-size: smaller;padding: 10px">3/200</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const addButton = document.querySelector('input[value="+추가"]');
+    const customInput = document.querySelector('#custom');
+    const addExt = document.querySelector('#addExt');
+
+    addButton.addEventListener('click', function () {
+      const newTagName = customInput.value;
+      if (newTagName) {
+        const newTag = document.createElement('div');
+        newTag.classList.add("custom-tag");
+
+        const newText = document.createElement('span');
+        newText.textContent = newTagName;
+        newTag.appendChild(newText); // 텍스트 추가
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = "X";
+        removeButton.classList.add("btn-clear");
+
+        // x 버튼 클릭 시 해당 태그 제거
+        removeButton.addEventListener('click', function () {
+          newTag.remove();
+        });
+
+        newTag.appendChild(removeButton); // x 버튼 추가
+
+        addExt.appendChild(newTag);
+        customInput.value = "";
+      }
+    });
+  });
+</script>
+<script>
+  const btnClear = document.querySelector('.btn-clear');
+  btnClear.addEventListener('click', function(){
+    btnClear.parentNode.querySelector('input').value = "";
+  })
+</script>
+</body>
+</html>
